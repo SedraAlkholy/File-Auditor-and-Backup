@@ -3,6 +3,7 @@ TARGET_DIR="${1:-.}"
 LOG_FILE="$TARGET_DIR/auditor.log"
 require_dir "$TARGET_DIR" || exit 1
 
+#Lists all the files and directories in the given directory and counts them.
 scan_dir() {
 local file_count=0
 local dir_count=0
@@ -29,6 +30,7 @@ echo "Directories: $dir_count"
 log_action "scan_dir"
 }
 
+#Prints and checks the write, read, and execute permissions.
 permission_audit() {
 local unreadable_count=0
 local executable_count=0
@@ -77,6 +79,7 @@ echo "Executable Files: $executable_count"
 log_action "permission_audit"
 }
 
+#Counts the file given with a specific extension.
 extension_report() {
 declare -A ext_count
 ext_count=(
@@ -111,6 +114,7 @@ done
 log_action "extension_report"
 }
 
+#searches for a file by its name.
 search_file() {
 local search_text
 local file
@@ -138,6 +142,7 @@ fi
 log_action "search_file"
 }
 
+#Backsup timestamps of readable files.
 backup_all() {
 local file
 local file_name
@@ -170,6 +175,7 @@ echo "Skipped files: $skipped_count"
 log_action "backup_all"
 }
 
+#Displays all the backup files.
 list_backups() {
 local backup_file
 local found=0
@@ -190,6 +196,7 @@ fi
 log_action "list_backups"
 }
 
+#Restores a given backup without overwriting the original file.
 restore_backups() {
 local backup_name
 local backup_path
@@ -217,6 +224,7 @@ return 1
 fi
 }
 
+#Gives a menu for the user to choose an action to do.
 main_menu() {
 local choice
 
@@ -266,6 +274,7 @@ fi
 done
 }
 
+#Command-line Arguments
 if [ -z "$2" ];
 then
 main_menu
